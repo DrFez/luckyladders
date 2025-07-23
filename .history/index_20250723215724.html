@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Ladders</title>
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="icon" type="image/png" href="assets/images/2laddericon.png">
+</head>
+<body>
+    <div id="app">
+        <aside id="side-panel">
+            <h2>Progress</h2>
+            <ul id="ladder-progress">
+                <!-- Levels will be rendered here -->
+            </ul>
+            <div id="teacher-mode-toggle">
+                <label><input type="checkbox" id="teacherMode"> Teacher Mode</label>
+            </div>
+        </aside>
+        <main id="main-panel">
+            <h1>Lucky Ladders</h1>
+            <div id="mode-select">
+                <button id="diceMode">Dice Mode</button>
+                <button id="coinMode">Coin Mode</button>
+            </div>
+            <div id="game-area" class="hidden">
+                <div id="animation"></div>
+                <div id="outcome-text"></div>
+                <div id="prize-popup" class="hidden"></div>
+                <div id="confetti" class="hidden"></div>
+            </div>
+            <div id="results" class="hidden"></div>
+        </main>
+        <footer id="bottom-panel">
+            <div id="bank-accounts">
+                <span id="organiser-bank">Organiser: $500</span>
+                <span id="player-bank">Player: $10</span>
+            </div>
+            <button id="rollBtn" class="action-btn">Roll/Flip</button>
+            <button id="cashOutBtn" class="action-btn">Cash Out</button>
+            <button id="retryBtn" class="action-btn">Retry</button>
+        </footer>
+    </div>
+    <button id="hackerBtn" style="position:fixed;top:10px;right:10px;z-index:2000;">MENU</button>
+    <div id="hackerMenu" class="hidden">
+        <div style="background:#23274a;padding:2rem 1.5rem;border-radius:16px;box-shadow:0 0 24px #3e4edb99;position:fixed;top:50px;right:30px;z-index:2001;min-width:320px;max-width:95vw;">
+            <h2 style="color:#ffeb3b;">Hacker Menu</h2>
+            <div style="margin-bottom:1rem;">
+                <label><input type="radio" name="diceWeight" id="normalDice" checked> Normal Dice</label><br>
+                <label><input type="radio" name="diceWeight" id="alwaysSix"> Always a 6 / Heads</label><br>
+                <label><input type="radio" name="diceWeight" id="alwaysOne"> Always a 1 / Tails</label>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <label>Prize L1: $<input type="number" id="prize1" min="0" style="width:60px;"></label><br>
+                <label>Prize L2: $<input type="number" id="prize2" min="0" style="width:60px;"></label><br>
+                <label>Prize L3: $<input type="number" id="prize3" min="0" style="width:60px;"></label><br>
+                <label>Prize L4: $<input type="number" id="prize4" min="0" style="width:60px;"></label><br>
+                <label>Prize L5: $<input type="number" id="prize5" min="0" style="width:60px;"></label>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <label>Entry Fee: $<input type="number" id="entryFee" min="0" style="width:60px;"></label><br>
+                <label>Retry Fee: $<input type="number" id="retryFee" min="0" style="width:60px;"></label><br>
+                <label>Attempts: <input type="number" id="attempts" min="1" max="99" style="width:60px;"></label>
+            </div>
+            <button id="applyHacks" style="background:#4caf50;color:#23274a;padding:0.5rem 1.5rem;border:none;border-radius:8px;font-weight:bold;">Apply</button>
+            <button id="resetHacks" style="background:#ff9800;color:#23274a;padding:0.5rem 1.5rem;border:none;border-radius:8px;font-weight:bold;">Reset</button>
+            <button id="closeHacker" style="background:#3e4edb;color:#fff;padding:0.5rem 1.5rem;border:none;border-radius:8px;font-weight:bold;float:right;">Close</button>
+        </div>
+    </div>
+    <button id="rulesBtn" style="position:fixed;bottom:20px;right:20px;z-index:2000;">📜 Rules</button>
+    <div id="rulesModal" class="hidden">
+        <div style="background:#23274a;padding:2rem 1.5rem;border-radius:16px;box-shadow:0 0 24px #3e4edb99;position:fixed;top:50px;left:50%;transform:translateX(-50%);z-index:2001;min-width:320px;max-width:95vw;max-height:80vh;overflow-y:auto;">
+            <h2 style="color:#ffeb3b;">How to Play Lucky Ladders</h2>
+            <ul style="margin-bottom:1rem;line-height:1.6;">
+                <li>Choose <b>Dice Mode</b> or <b>Coin Mode</b> to start.</li>
+                <li>Pay the entry fee to play.</li>
+                <li>Each level, roll the dice (or flip the coin) to try to pass:</li>
+                <ul>
+                    <li><b>Dice Mode:</b> <br>
+                        Level 1: Roll <b>2 or higher</b><br>
+                        Level 2: Roll <b>3 or higher</b><br>
+                        Level 3: Roll <b>4 or higher</b><br>
+                        Level 4: Roll <b>5 or higher</b><br>
+                        Level 5: Roll <b>6</b><br>
+                        Prizes increase as you climb.
+                    </li>
+                    <li><b>Coin Mode:</b> Flip heads to move up. Prizes double each level.</li>
+                </ul>
+                <li>After each success, you can <b>Cash Out</b> to take your prize, or <b>Risk</b> for the next level.</li>
+                <li>If you fail, you lose your winnings unless you use a <b>Retry</b> (costs extra, drops you down one level).</li>
+                <li>Reach the top for the <b>Jackpot</b>!</li>
+                <li>See the <b>bank accounts</b> at the bottom left for your balance and the organiser's.</li>
+            </ul>
+            <button id="closeRules" style="background:#3e4edb;color:#fff;padding:0.5rem 1.5rem;border:none;border-radius:8px;font-weight:bold;">Close</button>
+        </div>
+    </div>
+    <!-- Background music -->
+    <audio id="bg-music" src="assets/sounds/Glidewithme.mp3" loop preload="auto" style="display:none;"></audio>
+    <!-- Only load the main controller as a module -->
+    <script type="module" src="scripts/values.js"></script>
+    <script type="module" src="scripts/uiController.js"></script>
+    <script>
+    // Background music autoplay with fallback for user gesture
+    const bgMusic = document.getElementById('bg-music');
+    function tryPlayMusic() {
+        if (!bgMusic) return;
+        bgMusic.volume = 0.5;
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // Autoplay blocked, wait for user gesture
+                const resumeMusic = () => {
+                    bgMusic.play();
+                    window.removeEventListener('click', resumeMusic);
+                    window.removeEventListener('keydown', resumeMusic);
+                };
+                window.addEventListener('click', resumeMusic);
+                window.addEventListener('keydown', resumeMusic);
+            });
+        }
+    }
+    window.addEventListener('DOMContentLoaded', tryPlayMusic);
+    </script>
+</body>
+</html>
