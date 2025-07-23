@@ -1,0 +1,13 @@
+transaction_type,amount
+add,200.0
+add,100.0
+income,33
+expense,0
+income,35
+expense,0
+income,332
+expense,90
+income,5
+expense,1
+income,5
+expense,0

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Ladders</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lucky Ladders Game</h1>
+        
+        <!-- Navigation tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('game-tab')">Play Game</button>
+            <button class="tab-btn" onclick="openTab('simulate-tab')">Simulate Players</button>
+            <button class="tab-btn" onclick="openTab('account-tab')">Account Manager</button>
+        </div>
+        
+        <!-- Game Tab -->
+        <div id="game-tab" class="tab-content active">
+            <div class="game-rules">
+                <h2>How to Play Lucky Ladders</h2>
+                <div class="rules-content">
+                    <p><strong>Welcome to Lucky Ladders!</strong> A game of chance where you climb through levels to win prizes.</p>
+                    
+                    <h3>Game Rules:</h3>
+                    <ul>
+                        <li><strong>Entry Fee:</strong> $5 to play</li>
+                        <li><strong>Goal:</strong> Climb up to 5 levels by rolling dice</li>
+                        <li><strong>Winning:</strong> At each level, roll equal to or higher than the required number</li>
+                        <li><strong>Retry:</strong> If you fail a roll (Level 2 or higher), you can pay $2 to retry from the previous level (one retry allowed per game)</li>
+                    </ul>
+                    
+                    <h3>Level Requirements:</h3>
+                    <ul>
+                        <li>Level 1: Need to roll 2 or higher</li>
+                        <li>Level 2: Need to roll 3 or higher</li>
+                        <li>Level 3: Need to roll 4 or higher</li>
+                        <li>Level 4: Need to roll 5 or higher</li>
+                        <li>Level 5: Need to roll 6 (Jackpot!)</li>
+                    </ul>
+                    
+                    <h3>Prizes:</h3>
+                    <ul>
+                        <li>Level 1: $1</li>
+                        <li>Level 2: $3</li>
+                        <li>Level 3: $6</li>
+                        <li>Level 4: $12</li>
+                        <li>Level 5: $30 (Jackpot!)</li>
+                    </ul>
+                    
+                    <p><strong>Strategy:</strong> After each successful roll (except Level 5), you can either cash out with your current prize or continue to the next level for a chance at a bigger prize!</p>
+                </div>
+                <button id="start-playing-btn" class="highlight-btn">Start Playing!</button>
+            </div>
+            
+            <div class="game-container" style="display: none;">
+                <div class="info-panel">
+                    <div class="level-info">Level: <span id="level-display">1</span></div>
+                    <div class="fee-info">Entry Fee: $5</div>
+                </div>
+                
+                <div class="dice-container">
+                    <canvas id="dice-canvas" width="150" height="150"></canvas>
+                    <div class="dice-message">Click the dice to roll!</div>
+                </div>
+                
+                <div class="message-area" id="game-message">Ready to play? Click the dice to start!</div>
+                
+                <div class="action-buttons">
+                    <button id="cashout-btn" disabled>Cash Out</button>
+                    <button id="continue-btn" disabled>Continue</button>
+                </div>
+                
+                <div class="history-container">
+                    <h3>Game History</h3>
+                    <div class="history-content" id="game-history">
+                        <p>🎲 Starting the game!</p>
+                        <p>💰 Entry Fee: $5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Simulate Tab -->
+        <div id="simulate-tab" class="tab-content">
+            <div class="simulation-container">
+                <div class="sim-controls">
+                    <label for="num-players">Number of players:</label>
+                    <input type="number" id="num-players" min="1" value="10">
+                    <button id="start-sim-btn">Start Simulation</button>
+                </div>
+                
+                <div class="sim-results" id="sim-results">
+                    <p>Enter the number of players and click Start Simulation.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Account Tab -->
+        <div id="account-tab" class="tab-content">
+            <div class="account-container">
+                <h2>Account Management</h2>
+                
+                <div class="account-summary" id="account-summary">
+                    <h3>Account Summary</h3>
+                    <div id="summary-content"></div>
+                </div>
+                
+                <div class="account-actions">
+                    <div class="action-group">
+                        <label for="amount-input">Amount:</label>
+                        <input type="number" id="amount-input" min="0" step="0.01" value="10">
+                    </div>
+                    <div class="button-group">
+                        <button id="add-money-btn">Add Money</button>
+                        <button id="remove-money-btn">Remove Money</button>
+                        <button id="view-summary-btn">View Summary</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+    <script src="simulation.js"></script>
+    <script src="account.js"></script>
+</body>
+</html>
